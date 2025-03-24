@@ -284,4 +284,4 @@ app.listen(port, () => {
 
 ## Conclusion
 
-You've now created an admin panel for your web application using Node.js, Express, and MongoDB. This includes serving static files, handling user authentication, and performing CRUD operations. You can expand and customize this further based on your needs.
+You've now created an admin panel for your web application using Node.js, Express, and MongoDB. This includes serving static files, handling user authentication, and performing CRUD operations. 
