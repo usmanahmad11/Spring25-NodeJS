@@ -142,9 +142,7 @@ mongoose.connect('mongodb://localhost:27017/mywebapp', { useNewUrlParser: true, 
 
 // Routes
 const users = require('./routes/users');
-const welcome = require('./routes/welcome');
 app.use('/users', users);
-app.use('/api/welcome', welcome);
 
 // Google OAuth routes
 app.get('/auth/google',
