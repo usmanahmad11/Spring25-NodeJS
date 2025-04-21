@@ -153,12 +153,4 @@ const API_KEY = process.env.API_KEY;
 
 ---
 
-## Step 8: Additional Enhancements
 
-1. Add error handling and logging.
-2. Use middleware for validation.
-3. Deploy the app to a cloud service like **Heroku**, **AWS**, or **Render**.
-
----
-
-Let me know if you need further assistance!
