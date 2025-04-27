@@ -325,4 +325,5 @@ Visit `http://localhost:3000` to view your app!
 
 ---
 
-Let me know if you need further assistance!
+
+Good Luck!
