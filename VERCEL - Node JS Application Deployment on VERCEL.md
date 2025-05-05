@@ -1,8 +1,11 @@
 # Full Stack Weather Application
 
-This project is a full-stack Node.js application with frontend and backend, integrated with MongoDB and a real API (OpenWeather API). The application displays weather data for a given city and is deployed on Vercel.
+This project is a full-stack Node.js application with a React frontend and an Express backend, integrated with MongoDB Atlas and OpenWeather API. The application enables users to fetch and save weather data for cities and is fully deployed on Vercel.
+
+---
 
 ## Features
+
 - **Backend**: Built with Express.js, integrates MongoDB Atlas for data storage.
 - **Frontend**: Built with React.js to interact with the backend API.
 - **API Integration**: Fetches real-time weather data from the OpenWeather API.
@@ -11,26 +14,47 @@ This project is a full-stack Node.js application with frontend and backend, inte
 ---
 
 ## Prerequisites
+
 1. **Node.js** (v14 or later)
-2. **MongoDB Atlas** account for cloud database.
-3. **OpenWeather API Key** ([Sign up for an API key here](https://openweathermap.org/api)).
+2. **MongoDB Atlas** account for cloud database ([Sign up here](https://www.mongodb.com/cloud/atlas)).
+3. **OpenWeather API Key** ([Get your API key here](https://openweathermap.org/api)).
 4. **Vercel CLI** for deployment ([Install it here](https://vercel.com/cli)).
 
 ---
 
-## Backend Setup
+## Project Structure
 
-### 1. Create the Backend
-Create a directory for the backend and initialize a Node.js project:
+The project consists of two folders:
+1. `backend`: Contains the Express server and MongoDB integration.
+2. `frontend`: Contains the React application for the user interface.
+
+Both folders are deployed separately on Vercel.
+
+---
+
+## Step 1: Backend Setup
+
+### 1. Create the Backend Folder
+
+Create a folder named `backend`, then navigate into it:
 ```bash
 mkdir backend
 cd backend
+```
+
+### 2. Initialize the Node.js Project
+
+Run the following commands to initialize the project and install required packages:
+```bash
 npm init -y
 npm install express mongoose axios cors dotenv
 ```
 
-Create a file `server.js` and add the following code:
-```javascript name=server.js
+### 3. Create the Server File
+
+Create a file named `server.js` in the `backend` folder and add the following code:
+
+```javascript name=backend/server.js
 const express = require("express");
 const mongoose = require("mongoose");
 const axios = require("axios");
@@ -38,7 +62,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
@@ -61,6 +85,7 @@ const WeatherSchema = new mongoose.Schema({
 const Weather = mongoose.model("Weather", WeatherSchema);
 
 // Routes
+// Fetch weather from OpenWeather API and save to MongoDB
 app.post("/api/weather", async (req, res) => {
   const { city } = req.body;
 
@@ -82,6 +107,7 @@ app.post("/api/weather", async (req, res) => {
   }
 });
 
+// Retrieve data from MongoDB
 app.get("/api/weather", async (req, res) => {
   try {
     const weatherData = await Weather.find();
@@ -91,13 +117,13 @@ app.get("/api/weather", async (req, res) => {
   }
 });
 
+// Start the server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 ```
 
----
+### 4. Add Environment Variables
 
-### 2. Add Environment Variables
-Create a `.env` file in the `backend` directory with the following content:
+Create a `.env` file in the `backend` folder and add the following variables:
 ```plaintext
 MONGO_URI=your_mongodb_atlas_connection_string
 WEATHER_API_KEY=your_openweather_api_key
@@ -108,30 +134,35 @@ Replace `your_mongodb_atlas_connection_string` and `your_openweather_api_key` wi
 
 ---
 
-### 3. Test the Backend
-Start the backend server:
+### 5. Test the Backend Locally
+
+Start the server:
 ```bash
 node server.js
 ```
 
-Use an API testing tool like Postman or curl to test the endpoints:
+Test the endpoints using a tool like Postman or curl:
 - **POST /api/weather**: Add a city and fetch its weather data.
 - **GET /api/weather**: Retrieve all saved weather data.
 
 ---
 
-## Frontend Setup
+## Step 2: Frontend Setup
 
-### 1. Create the Frontend
-Create a React app for the frontend:
+### 1. Create the Frontend Folder
+
+In the root directory, create a folder named `frontend` and navigate into it:
 ```bash
 npx create-react-app frontend
 cd frontend
 npm install axios
 ```
 
+### 2. Update the App Component
+
 Replace the content of `src/App.js` with the following code:
-```javascript name=src/App.js
+
+```javascript name=frontend/src/App.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -191,21 +222,21 @@ export default App;
 
 ---
 
-### 2. Test the Frontend
+### 3. Test the Frontend Locally
+
 Start the development server:
 ```bash
 npm start
 ```
 
-Ensure the backend server is running on `http://localhost:5000`.
-
 ---
 
-## Deployment on Vercel
+## Step 3: Deployment on Vercel
 
 ### Backend Deployment
+
 1. Add a `vercel.json` file in the `backend` directory:
-```json
+```json name=backend/vercel.json
 {
   "version": 2,
   "builds": [{ "src": "server.js", "use": "@vercel/node" }],
@@ -219,7 +250,10 @@ cd backend
 vercel
 ```
 
+---
+
 ### Frontend Deployment
+
 1. Deploy the React app:
 ```bash
 cd frontend
@@ -228,15 +262,16 @@ vercel
 
 ---
 
-## Environment Variables in Vercel
-1. Set the following environment variables in the Vercel project settings:
-   - **MONGO_URI**
-   - **WEATHER_API_KEY**
+### Set Environment Variables in Vercel
+
+Go to the Vercel dashboard and add the following environment variables under **Project Settings** > **Environment Variables** for the backend:
+- **MONGO_URI**
+- **WEATHER_API_KEY**
 
 ---
 
-## Final Steps
-- Access the deployed frontend and backend URLs from Vercel.
-- Test the application in a live environment.
+### Final Steps
 
+1. Access the deployed frontend and backend URLs from Vercel.
+2. Update the frontend API calls to use the deployed backend URL instead of `http://localhost:5000`.
 
