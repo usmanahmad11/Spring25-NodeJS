@@ -239,4 +239,4 @@ vercel
 - Access the deployed frontend and backend URLs from Vercel.
 - Test the application in a live environment.
 
-Enjoy your Weather App!
+
