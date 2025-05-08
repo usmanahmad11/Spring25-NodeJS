@@ -165,7 +165,7 @@ npm start
 
 ---
 
-## Next Steps
+## Please try intergrating following features once the basic application is developed. 
 1. Add user authentication using Firebase or Auth0.
 2. Create APIs for posts, comments, and likes.
 3. Add real-time functionality for chat or notifications using Socket.IO.
